@@ -1,0 +1,9 @@
+# General
+.DS_Store
+*.pyc
+__pycache__/
+*.pyo
+
+# Custom additions
+/output/
+*.pdf
