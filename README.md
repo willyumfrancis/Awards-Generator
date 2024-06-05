@@ -19,56 +19,42 @@ You can install these with pip:
 
 ```bash
 pip install reportlab PyPDF2
-Usage
+```
+## Usage
 
 To use the PDF-Generator, follow these steps:
 
 Clone the repository:
-bash
-Copy code
-git clone https://github.com/William-Misiaszek/PDF-Generator.git
+```bash
+git clone https://github.com/yourusername/PDF-Generator.git
+```
 Navigate to the cloned directory:
-bash
-Copy code
+```bash
 cd PDF-Generator
+```
 Run the script:
-bash
-Copy code
+```bash
 python PDFGEN.py
+```
 The script will generate PDFs and save them to the /OUTPUT directory.
 
-Configuration
+## Configuration
 
 Setting Your Own Template
 To use your own PDF template:
 
 Place your PDF template file into the project directory.
 Modify the template_pdf_path in the PDFGEN.py script to point to your template file. For example:
-python
-Copy code
+```bash
 template_pdf_path = '/path/to/your/template.pdf'
-Customizing Names
+```
+## Customizing Names
 You can customize the names by modifying the names list in PDFGEN.py.
 
 Example of names list:
 
-python
-Copy code
-names = [
-    ("First", "Last"),
-    ("Jane", "Doe")
-]
-Contributing
-
-Contributions are welcome! If you have improvements or bug fixes:
-
-Fork the repository.
-Create a new branch (git checkout -b feature-branch).
-Make your changes.
-Commit your changes (git commit -am 'Add some feature').
-Push to the branch (git push origin feature-branch).
-Create a new Pull Request.
-License
-
-
-Thank you for checking out the PDF-Generator!
+```bash
+git clone https://github.com/yourusername/PDF-Generator.git
+cd PDF-Generator
+python PDFGEN.py
+```
