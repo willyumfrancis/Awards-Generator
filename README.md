@@ -15,10 +15,13 @@ Before you can run this script, you will need Python installed on your system al
 - reportlab
 - PyPDF2
 
-You can install these with pip:
+Here are the Terminal Steps:
 
 ```bash
-pip install reportlab PyPDF2
+1. python -m venv venv
+2. source venv/bin/activate   # On Windows use `venv\Scripts\activate`
+3. pip install reportlab PyPDF2
+4. python3 pdfgen.py
 ```
 ## Usage
 
@@ -58,3 +61,4 @@ git clone https://github.com/yourusername/PDF-Generator.git
 cd PDF-Generator
 python PDFGEN.py
 ```
+
