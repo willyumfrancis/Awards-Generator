@@ -56,9 +56,10 @@ You can customize the names by modifying the names list in PDFGEN.py.
 
 Example of names list:
 
-```bash
-git clone https://github.com/yourusername/PDF-Generator.git
-cd PDF-Generator
-python PDFGEN.py
-```
+names = [
+    "Bob Marley",
+    "William Misiaszek",
+    "Bob Dylan",
+]
+
 
