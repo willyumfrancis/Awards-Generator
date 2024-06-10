@@ -6,26 +6,39 @@ from reportlab.pdfbase.pdfmetrics import stringWidth
 from PyPDF2 import PdfWriter, PdfReader
 import io
 import os
+import csv
 
 # Register the custom TTF font
-pdfmetrics.registerFont(TTFont("CustomFont", '/Users/wmisiasz/Documents/CODE/PDFGEN/Aphrodite-Slim-Pro.ttf'))
+pdfmetrics.registerFont(TTFont("CustomFont", 'Aphrodite-Slim-Pro.ttf'))
 
-# List of names to be filled in the certificates
-names = [
-    ("Bob", "Marley"),
-    ("William", "Fancy Pants"),
-]
-
-
-# Your existing PDF file
-template_pdf_path = '/Users/wmisiasz/Documents/CODE/PDFGEN/CIA.pdf'
+# TEMPLATE UPDATE HERE. Use Relative Path.
+# Now, just run it via python3 pdfgen.py
+template_pdf_path = 'CIA Citation-FINAL.pdf'
 
 # Output directory
-output_dir = '/Users/wmisiasz/Documents/CODE/PDFGEN/OUTPUT'
+output_dir = 'OUTPUT'
 
 # Ensure output directory exists
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
+
+def read_names_from_csv(csv_filepath):
+    names = []
+    print(f"Reading names from {csv_filepath}")
+    
+    with open(csv_filepath, mode='r', encoding='utf-8') as csvfile:
+        csvreader = csv.reader(csvfile)
+        
+        # Skip the header if there is one
+        next(csvreader, None)
+        
+        for row in csvreader:
+            if row and row[0].strip():  # Ensure the row is not empty and the name is not an empty string
+                full_name = row[0].strip()
+                names.append(full_name)
+                print(f"Added name: {full_name}")
+                
+    return names
 
 def create_filled_pdf(full_name, font_name, font_size, centered_x, y):
     print(f"Creating filled PDF for {full_name}")
@@ -57,30 +70,42 @@ def merge_pdfs(template, new_pdf):
     output.add_page(template_page)
     return output
 
-# Centering configuration
-centered_x = 400  # Adjust this to the center x coordinate of where you want the names
-font_size = 27
-font_name = "CustomFont"
+def main():
+    # Path to your CSV file
+    csv_filepath = 'names.csv'
+    
+    # Check if the file exists
+    if not os.path.exists(csv_filepath):
+        print(f"CSV file not found: {csv_filepath}")
+        return
+    
+    # Read names from the CSV file
+    names = read_names_from_csv(csv_filepath)
 
-for first_name, last_name in names:
-    # Reload your existing PDF template for each iteration
-    template_pdf = PdfReader(template_pdf_path)
-    
-    # Full name
-    full_name = f"{first_name} {last_name}"
-    
-    # Create a new PDF with the name filled in
-    new_pdf = create_filled_pdf(full_name, font_name, font_size, centered_x, 290)  # Adjust y as needed
-    
-    # Merge the new PDF with the template
-    output_pdf = merge_pdfs(template_pdf, new_pdf)
-    
-    # Output file path
-    output_filepath = os.path.join(output_dir, f"{first_name}_{last_name}_certificate.pdf")
-    print(f"Saving certificate for {full_name} as {output_filepath}")
-    
-    # Save the certificate PDF in the output directory
-    with open(output_filepath, "wb") as outputStream:
-        output_pdf.write(outputStream)
+    # Centering configuration
+    centered_x = 396  # This is Landscape Mode Centered.
+    font_size = 27
+    font_name = "CustomFont"
 
-print("All certificates have been created.")
+    for full_name in names:
+        # Reload your existing PDF template for each iteration
+        template_pdf = PdfReader(template_pdf_path)
+        
+        # Create a new PDF with the name filled in
+        new_pdf = create_filled_pdf(full_name, font_name, font_size, centered_x, 290)  # Adjust y as needed
+        
+        # Merge the new PDF with the template
+        output_pdf = merge_pdfs(template_pdf, new_pdf)
+        
+        # Output file path
+        output_filepath = os.path.join(output_dir, f"{full_name.replace(' ', '_')}.pdf")
+        print(f"Saving certificate for {full_name} as {output_filepath}")
+        
+        # Save the certificate PDF in the output directory
+        with open(output_filepath, "wb") as outputStream:
+            output_pdf.write(outputStream)
+
+    print("All certificates have been created.")
+
+if __name__ == "__main__":
+    main()

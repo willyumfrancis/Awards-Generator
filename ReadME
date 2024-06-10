@@ -1,0 +1,4 @@
+1. python -m venv venv
+2. source venv/bin/activate   # On Windows use `venv\Scripts\activate`
+3. pip install reportlab PyPDF2
+4. python3 pdfgen.py
